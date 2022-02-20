@@ -47,6 +47,7 @@ class PlantDetailFragmentTest {
     @JvmField
     val activityTestRule = ActivityTestRule(GardenActivity::class.java)
 
+    // detailFragment 를 테스트 하기 위해 detail 로 넘어가는 과정
     @Before
     fun jumpToPlantDetailFragment() {
         activityTestRule.activity.apply {
@@ -59,6 +60,7 @@ class PlantDetailFragmentTest {
 
     @Ignore("Share button redesign pending")
     @Test
+    // 공유 버튼을 눌렀을때 잘 동작하는지 테스트?
     fun testShareTextIntent() {
         val shareText = activityTestRule.activity.getString(
             R.string.share_text_plant,

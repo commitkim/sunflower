@@ -34,11 +34,14 @@ class GardenActivityTest {
     private val hiltRule = HiltAndroidRule(this)
     private val activityTestRule = ActivityTestRule(GardenActivity::class.java)
 
+    // outer -> inner 방향으로 rule이 실행되며 around 로 outer 이후 around로 inner rule 설정
     @get:Rule
     val rule = RuleChain
         .outerRule(hiltRule)
         .around(activityTestRule)
 
+    // 메인에서 add plant 를 눌렀을때 plant list 페이지로 잘 이동하는지 테스트
+    // 이미 하나 이상의 plant 를 추가하면 add plant 가 없어서 테스트 실패
     @Test fun clickAddPlant_OpensPlantList() {
         // Given that no Plants are added to the user's garden
 

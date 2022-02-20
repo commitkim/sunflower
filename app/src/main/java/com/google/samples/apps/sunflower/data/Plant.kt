@@ -22,8 +22,10 @@ import androidx.room.PrimaryKey
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_YEAR
 
+// database entity 를 annotation 으로 선언
 @Entity(tableName = "plants")
 data class Plant(
+    // column name 을 id 롤 정하고 PK 로 설정
     @PrimaryKey @ColumnInfo(name = "id") val plantId: String,
     val name: String,
     val description: String,
@@ -36,6 +38,7 @@ data class Plant(
      * Determines if the plant should be watered.  Returns true if [since]'s date > date of last
      * watering + watering Interval; false otherwise.
      */
+    // 현재 년도의 일수를 구해서 wateringInterval 만큼을 더한뒤 기준인 since 와 비교하여 물을 줘야하는지 알려줌
     fun shouldBeWatered(since: Calendar, lastWateringDate: Calendar) =
         since > lastWateringDate.apply { add(DAY_OF_YEAR, wateringInterval) }
 

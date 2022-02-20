@@ -32,12 +32,14 @@ class PlantTest {
         plant = Plant("1", "Tomato", "A red vegetable", 1, 2, "")
     }
 
+    // plant 의 내부 값들을 잘 가져오는지 테스트
     @Test fun test_default_values() {
         val defaultPlant = Plant("2", "Apple", "Description", 1)
         assertEquals(7, defaultPlant.wateringInterval)
         assertEquals("", defaultPlant.imageUrl)
     }
 
+    // 물 줘야하는 시기 계산을 잘 하는지 테스트
     @Test fun test_shouldBeWatered() {
         Calendar.getInstance().let { now ->
             // Generate lastWateringDate from being as copy of now.
@@ -61,6 +63,7 @@ class PlantTest {
         }
     }
 
+    // name 를 리턴하는 toString 테스트
     @Test fun test_toString() {
         assertEquals("Tomato", plant.toString())
     }

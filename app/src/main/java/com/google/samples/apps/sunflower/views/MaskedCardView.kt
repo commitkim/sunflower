@@ -31,6 +31,8 @@ import com.google.android.material.shape.ShapeAppearancePathProvider
  * A Card view that clips the content of any shape, this should be done upstream in card,
  * working around it for now.
  */
+
+// custom view
 class MaskedCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,

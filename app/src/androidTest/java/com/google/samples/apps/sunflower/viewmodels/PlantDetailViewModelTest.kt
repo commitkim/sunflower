@@ -47,6 +47,7 @@ class PlantDetailViewModelTest {
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
     private val coroutineRule = MainCoroutineRule()
 
+    // outer -> inner 방향으로 rule이 실행되며 around 로 outer 이후 around로 inner rule 설정
     @get:Rule
     val rule = RuleChain
             .outerRule(hiltRule)
@@ -61,11 +62,13 @@ class PlantDetailViewModelTest {
 
     @Before
     fun setUp() {
+        // hilt inject
         hiltRule.inject()
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         appDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
 
+        // detail 에 표시할 plantId 를 저장
         val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
             set("plantId", testPlant.plantId)
         }
@@ -80,6 +83,7 @@ class PlantDetailViewModelTest {
     @Suppress("BlockingMethodInNonBlockingContext")
     @Test
     @Throws(InterruptedException::class)
+    // savedStateHandle 에서 값을 잘 가져오는지 테스트
     fun testDefaultValues() = coroutineRule.runBlockingTest {
         assertFalse(getValue(viewModel.isPlanted))
     }

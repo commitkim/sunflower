@@ -24,18 +24,23 @@ import com.google.samples.apps.sunflower.PlantListFragment
 const val MY_GARDEN_PAGE_INDEX = 0
 const val PLANT_LIST_PAGE_INDEX = 1
 
+// viewPager Adapter로 fragment 간 슬라이드 기능을 용이하게 적용하기 위해 FragmentStateAdapter 사용
 class SunflowerPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     /**
      * Mapping of the ViewPager page indexes to their respective Fragments
      */
+
+    // 각각의 인덱스에 맞게 생성자를 map 에 저장
     private val tabFragmentsCreators: Map<Int, () -> Fragment> = mapOf(
         MY_GARDEN_PAGE_INDEX to { GardenFragment() },
         PLANT_LIST_PAGE_INDEX to { PlantListFragment() }
     )
 
+    // map 의 사이즈로 전체 크기 결정
     override fun getItemCount() = tabFragmentsCreators.size
 
+    // 해당 position 때 map 에 저장된 생성자 실행
     override fun createFragment(position: Int): Fragment {
         return tabFragmentsCreators[position]?.invoke() ?: throw IndexOutOfBoundsException()
     }

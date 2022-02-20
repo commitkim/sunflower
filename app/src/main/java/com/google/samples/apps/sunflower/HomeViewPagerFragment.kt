@@ -44,16 +44,19 @@ class HomeViewPagerFragment : Fragment() {
         viewPager.adapter = SunflowerPagerAdapter(this)
 
         // Set the icon and text for each tab
+        // tabLayout과 viewPager를 연결해주고 tab의 각각의 아이템을 set 한다.
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.setIcon(getTabIcon(position))
             tab.text = getTabTitle(position)
         }.attach()
 
+        // ActionBar 로 등록
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         return binding.root
     }
 
+    // tab의 icon을 설정하는 메서드
     private fun getTabIcon(position: Int): Int {
         return when (position) {
             MY_GARDEN_PAGE_INDEX -> R.drawable.garden_tab_selector
@@ -62,6 +65,7 @@ class HomeViewPagerFragment : Fragment() {
         }
     }
 
+    // tab의 title 을 설정하는 메서드
     private fun getTabTitle(position: Int): String? {
         return when (position) {
             MY_GARDEN_PAGE_INDEX -> getString(R.string.my_garden_title)

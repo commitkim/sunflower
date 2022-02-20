@@ -59,15 +59,20 @@ class PlantDetailFragment : Fragment() {
         ).apply {
             viewModel = plantDetailViewModel
             lifecycleOwner = viewLifecycleOwner
+            // FAB 버튼의 동작을 위해서 view binding의 callback 변수에 값을 지정
             callback = Callback { plant ->
                 plant?.let {
+                    // AppBar의 FAB 를 숨김
                     hideAppBarFab(fab)
+                    // view model의 addPlantToGarden 실행
                     plantDetailViewModel.addPlantToGarden()
+                    // 스낵바 노출
                     Snackbar.make(root, R.string.added_plant_to_garden, Snackbar.LENGTH_LONG)
                         .show()
                 }
             }
 
+            // galleryNav 버튼에 navigate 함수 onClick 으로 등록
             galleryNav.setOnClickListener { navigateToGallery() }
 
             var isToolbarShown = false
@@ -151,6 +156,7 @@ class PlantDetailFragment : Fragment() {
         fab.hide()
     }
 
+    // 람다식으로 익명 클래스를 생성하기 위한 함수형 인터페이스 선언
     fun interface Callback {
         fun add(plant: Plant?)
     }

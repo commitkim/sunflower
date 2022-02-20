@@ -20,6 +20,7 @@ import com.google.samples.apps.sunflower.data.PlantAndGardenPlantings
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+// PlantAndGardenPlantings 를 받으면 필요한 데이터로 정제하는 역할
 class PlantAndGardenPlantingsViewModel(plantings: PlantAndGardenPlantings) {
     private val plant = checkNotNull(plantings.plant)
     private val gardenPlanting = plantings.gardenPlantings[0]

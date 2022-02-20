@@ -19,6 +19,7 @@ package com.google.samples.apps.sunflower.utilities
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+// 위도 값으로 생성한 growZone이 잘 계산 되는지 테스트
 class GrowZoneUtilTest {
 
     @Test fun getZoneForLatitude() {

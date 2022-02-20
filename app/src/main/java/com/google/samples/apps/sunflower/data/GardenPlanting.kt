@@ -32,28 +32,35 @@ import java.util.Calendar
  * database migration, as the column name would not change.
  */
 @Entity(
+    // table name을 garden_plantings로 설정
     tableName = "garden_plantings",
+    // 외래키로 plant 의 id 와 연결
     foreignKeys = [
         ForeignKey(entity = Plant::class, parentColumns = ["id"], childColumns = ["plant_id"])
     ],
+    // 인덱싱 하겠다?
     indices = [Index("plant_id")]
 )
 data class GardenPlanting(
+    // Column name 이 plant_id 인 필드 선언
     @ColumnInfo(name = "plant_id") val plantId: String,
 
     /**
      * Indicates when the [Plant] was planted. Used for showing notification when it's time
      * to harvest the plant.
      */
+    // Column name 이 plant_date 인 필드 선언
     @ColumnInfo(name = "plant_date") val plantDate: Calendar = Calendar.getInstance(),
 
     /**
      * Indicates when the [Plant] was last watered. Used for showing notification when it's
      * time to water the plant.
      */
+    // Column name 이 last_watering_date 인 필드 선언
     @ColumnInfo(name = "last_watering_date")
     val lastWateringDate: Calendar = Calendar.getInstance()
 ) {
+    // autoGenerate 로 PrimaryKey 선언
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var gardenPlantingId: Long = 0

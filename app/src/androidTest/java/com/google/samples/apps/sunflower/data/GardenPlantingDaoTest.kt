@@ -39,22 +39,28 @@ class GardenPlantingDaoTest {
     private lateinit var gardenPlantingDao: GardenPlantingDao
     private var testGardenPlantingId: Long = 0
 
+    // 모두 한 스레드에서 실행되게 하여 동기화를 생각하지 않을 수 있다.
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    // before 로 db 생성
     @Before fun createDb() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         gardenPlantingDao = database.gardenPlantingDao()
 
+        // test에 필요한 데이터들을 insert
         database.plantDao().insertAll(testPlants)
+        // test에 필요한 데이터들을 insert
         testGardenPlantingId = gardenPlantingDao.insertGardenPlanting(testGardenPlanting)
     }
 
+    // after 로 db close
     @After fun closeDb() {
         database.close()
     }
 
+    // GardenPlanting 를 하나 추가하고 잘 추가 되었는지 확인
     @Test fun testGetGardenPlantings() = runBlocking {
         val gardenPlanting2 = GardenPlanting(
             testPlants[1].plantId,
@@ -65,6 +71,7 @@ class GardenPlantingDaoTest {
         assertThat(gardenPlantingDao.getGardenPlantings().first().size, equalTo(2))
     }
 
+    // GardenPlanting 를 하나 추가하고 잘 들어갔는지 확인후 삭제하여 잘 삭제되어 기존에 있던거가 남아있는지 확인
     @Test fun testDeleteGardenPlanting() = runBlocking {
         val gardenPlanting2 = GardenPlanting(
             testPlants[1].plantId,
@@ -77,14 +84,17 @@ class GardenPlantingDaoTest {
         assertThat(gardenPlantingDao.getGardenPlantings().first().size, equalTo(1))
     }
 
+    // 기존에 들어가있던 plantId로 plantId가 있는지 확인하는 isPlanted()가 ture 잘 동작하는지 확인
     @Test fun testGetGardenPlantingForPlant() = runBlocking {
         assertTrue(gardenPlantingDao.isPlanted(testPlant.plantId).first())
     }
 
+    // 들어가있지 않은 plantId로 plantId가 있는지 확인하는 isPlanted()가 false 잘 동작하는지 확인
     @Test fun testGetGardenPlantingForPlant_notFound() = runBlocking {
         assertFalse(gardenPlantingDao.isPlanted(testPlants[2].plantId).first())
     }
 
+    // 기존에 들어가 있던게 잘 들어가있는지 확인
     @Test fun testGetPlantAndGardenPlantings() = runBlocking {
         val plantAndGardenPlantings = gardenPlantingDao.getPlantedGardens().first()
         assertThat(plantAndGardenPlantings.size, equalTo(1))

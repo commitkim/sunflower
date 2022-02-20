@@ -22,11 +22,13 @@ import androidx.databinding.DataBindingUtil.setContentView
 import com.google.samples.apps.sunflower.databinding.ActivityGardenBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+// DI(의존성 주입)를 사용하기 위해 Hilt의 @AndroidEntryPoint 어노테이션을 사용하였다.
 @AndroidEntryPoint
 class GardenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // dataBinding 사용
         setContentView<ActivityGardenBinding>(this, R.layout.activity_garden)
     }
 }

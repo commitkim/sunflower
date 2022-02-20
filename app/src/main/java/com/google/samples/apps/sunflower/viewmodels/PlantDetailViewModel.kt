@@ -31,13 +31,16 @@ import javax.inject.Inject
 /**
  * The ViewModel used in [PlantDetailFragment].
  */
+// hilt 에 view model 로 등록
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
+    // 화면 회전 등에서 데이터를 저장하기 위해서 사용
     savedStateHandle: SavedStateHandle,
     plantRepository: PlantRepository,
     private val gardenPlantingRepository: GardenPlantingRepository,
 ) : ViewModel() {
 
+    // 전달받은 SavedStateHandle 에서 plantId 를 받아욤
     val plantId: String = savedStateHandle.get<String>(PLANT_ID_SAVED_STATE_KEY)!!
 
     val isPlanted = gardenPlantingRepository.isPlanted(plantId).asLiveData()

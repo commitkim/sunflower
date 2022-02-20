@@ -24,6 +24,7 @@ import com.google.samples.apps.sunflower.data.PlantAndGardenPlantings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+// hilt에서 view model 을 관리
 @HiltViewModel
 class GardenPlantingListViewModel @Inject internal constructor(
     gardenPlantingRepository: GardenPlantingRepository

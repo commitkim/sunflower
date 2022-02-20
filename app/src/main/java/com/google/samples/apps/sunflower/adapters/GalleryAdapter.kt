@@ -31,7 +31,7 @@ import com.google.samples.apps.sunflower.databinding.ListItemPhotoBinding
 /**
  * Adapter for the [RecyclerView] in [GalleryFragment].
  */
-
+// paging3 라이브러리에서 사용되는 pagingDataAdapter 로 Flow 로 데이터를 전달
 class GalleryAdapter : PagingDataAdapter<UnsplashPhoto, GalleryViewHolder>(GalleryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
@@ -57,6 +57,7 @@ class GalleryAdapter : PagingDataAdapter<UnsplashPhoto, GalleryViewHolder>(Galle
         init {
             binding.setClickListener { view ->
                 binding.photo?.let { photo ->
+                    // 사진 클릭시 해당 데이터의 url로 인터넷 연결
                     val uri = Uri.parse(photo.user.attributionUrl)
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     view.context.startActivity(intent)

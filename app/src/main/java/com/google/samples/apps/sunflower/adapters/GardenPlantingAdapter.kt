@@ -31,10 +31,12 @@ import com.google.samples.apps.sunflower.databinding.ListItemGardenPlantingBindi
 import com.google.samples.apps.sunflower.viewmodels.PlantAndGardenPlantingsViewModel
 
 class GardenPlantingAdapter :
+    // Item 과 ViewHolder 를 받아서 DiffUtil을 사용할수 있게 하는 Adapter
     ListAdapter<PlantAndGardenPlantings, GardenPlantingAdapter.ViewHolder>(
         GardenPlantDiffCallback()
     ) {
 
+    // ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             DataBindingUtil.inflate(
@@ -61,6 +63,7 @@ class GardenPlantingAdapter :
             }
         }
 
+        // viewPager 에서 plantId 를 사용하여 DetailFragment 로 이동하는 함수 (navigator 사용)
         private fun navigateToPlant(plantId: String, view: View) {
             val direction = HomeViewPagerFragmentDirections
                 .actionViewPagerFragmentToPlantDetailFragment(plantId)
@@ -70,14 +73,17 @@ class GardenPlantingAdapter :
         fun bind(plantings: PlantAndGardenPlantings) {
             with(binding) {
                 viewModel = PlantAndGardenPlantingsViewModel(plantings)
+                // view binding 에서 결과를 즉시 반영하게 하는 함수
                 executePendingBindings()
             }
         }
     }
 }
 
+// notifyDataSetChanged() 대신 DiffUtil 을 사용하여 변경된 부분만 업데이트해주는 DiffUtil class 상속
 private class GardenPlantDiffCallback : DiffUtil.ItemCallback<PlantAndGardenPlantings>() {
 
+    // 먼저 호출되어 두개의 item 이 같은지 비교
     override fun areItemsTheSame(
         oldItem: PlantAndGardenPlantings,
         newItem: PlantAndGardenPlantings
@@ -85,6 +91,7 @@ private class GardenPlantDiffCallback : DiffUtil.ItemCallback<PlantAndGardenPlan
         return oldItem.plant.plantId == newItem.plant.plantId
     }
 
+    // areItemsTheSame 이 true 일때 호출됨. 두 아이템이 같은 내용인지 비교
     override fun areContentsTheSame(
         oldItem: PlantAndGardenPlantings,
         newItem: PlantAndGardenPlantings

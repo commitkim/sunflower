@@ -27,6 +27,7 @@ import java.util.Calendar.YEAR
 
 class GardenPlantingTest {
 
+    // calendar 객체의 값을 잘 가져와서 GardenPlanting 의 값을 잘 설정하는지 테스트
     @Test
     fun testDefaultValues() {
         val gardenPlanting = GardenPlanting("1")

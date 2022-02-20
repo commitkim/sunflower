@@ -32,6 +32,7 @@ import kotlin.math.abs
  *
  * For latitude values greater than max (90.0), zone 1 is returned.
  */
+// 위도에 따라 growZone 을 다르게 설정
 fun getZoneForLatitude(latitude: Double) = when (abs(latitude)) {
     in 0.0..7.0 -> 13
     in 7.0..14.0 -> 12

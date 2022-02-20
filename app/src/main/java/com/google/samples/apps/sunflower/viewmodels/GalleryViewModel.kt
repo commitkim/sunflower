@@ -26,6 +26,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+// Hilt 에서 ViewModel 을 생성할수 있게 등록
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     private val repository: UnsplashRepository
@@ -33,6 +34,7 @@ class GalleryViewModel @Inject constructor(
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<UnsplashPhoto>>? = null
 
+    // 전달받은 query를 현재 value에 저장하고 새로운 result를
     fun searchPictures(queryString: String): Flow<PagingData<UnsplashPhoto>> {
         currentQueryValue = queryString
         val newResult: Flow<PagingData<UnsplashPhoto>> =

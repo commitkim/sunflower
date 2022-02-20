@@ -27,6 +27,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.samples.apps.sunflower.R
 
+// 전달 받은 image url로 이미지를 보이는 view binding adapter
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
@@ -37,6 +38,7 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     }
 }
 
+// fab 을 전달받은 isGone에 따라서 숨기거나 보이게 하는 view binding adapter
 @BindingAdapter("isFabGone")
 fun bindIsFabGone(view: FloatingActionButton, isGone: Boolean?) {
     if (isGone == null || isGone) {
@@ -46,6 +48,7 @@ fun bindIsFabGone(view: FloatingActionButton, isGone: Boolean?) {
     }
 }
 
+// html 로 전달받은 description 을 html 로 바꾸어 보여주는 view binding adapter
 @BindingAdapter("renderHtml")
 fun bindRenderHtml(view: TextView, description: String?) {
     if (description != null) {

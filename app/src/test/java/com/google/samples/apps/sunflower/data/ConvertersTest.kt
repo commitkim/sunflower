@@ -24,6 +24,7 @@ import java.util.Calendar.MONTH
 import java.util.Calendar.SEPTEMBER
 import java.util.Calendar.YEAR
 
+// database 에 등록하는 converter 가 잘 동작하는지 테스트
 class ConvertersTest {
 
     private val cal = Calendar.getInstance().apply {

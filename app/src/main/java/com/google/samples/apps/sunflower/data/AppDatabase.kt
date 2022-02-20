@@ -33,7 +33,9 @@ import com.google.samples.apps.sunflower.workers.SeedDatabaseWorker.Companion.KE
 /**
  * The Room database for this app
  */
+// database 를 생성하는데 필요한 정보들을 지정
 @Database(entities = [GardenPlanting::class, Plant::class], version = 1, exportSchema = false)
+// database 에서 사용할 converter 들을 지정
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gardenPlantingDao(): GardenPlantingDao
@@ -42,8 +44,10 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
 
         // For Singleton instantiation
+        // 싱글턴을 위해서 read/write 연산시 항상 캐시가 아니라 메모리에 작성하겠다는 volatile annotation 사용
         @Volatile private var instance: AppDatabase? = null
 
+        // double-locking 사용해서 singleton 구현
         fun getInstance(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
                 instance ?: buildDatabase(context).also { instance = it }

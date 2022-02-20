@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 class GalleryFragment : Fragment() {
 
     private val adapter = GalleryAdapter()
+    // plantName 을 가져오기 위해서 navArgs 를 사용하여 전달 받음
     private val args: GalleryFragmentArgs by navArgs()
     private var searchJob: Job? = null
     private val viewModel: GalleryViewModel by viewModels()
@@ -53,16 +54,19 @@ class GalleryFragment : Fragment() {
         search(args.plantName)
 
         binding.toolbar.setNavigationOnClickListener { view ->
+            // 윗쪽 툴바를 클릭시 navigator 에서 한계층 전으로 돌아감
             view.findNavController().navigateUp()
         }
 
         return binding.root
     }
 
+    // gallery page 에 접근시 해당 query로 unsplash의 api 를 호출하여 화면을 업데이트하는 함수
     private fun search(query: String) {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
+            // viewModel 의 searchPictures 를 실행시켜서 결과를 adapter 로 전달
             viewModel.searchPictures(query).collectLatest {
                 adapter.submitData(it)
             }

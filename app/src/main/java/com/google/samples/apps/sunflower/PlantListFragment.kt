@@ -52,10 +52,12 @@ class PlantListFragment : Fragment() {
         return binding.root
     }
 
+    // menu inflate
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_plant_list, menu)
     }
 
+    // 옵션 아이템을 선택했을때 실행할 동작 설정
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_zone -> {
@@ -67,17 +69,19 @@ class PlantListFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: PlantAdapter) {
+        // viewModel 에서 plants 를 가져와서 adapter 로 submit
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
     }
 
+    // filter 정보에 따라 보여주는 데이터 변경
     private fun updateData() {
         with(viewModel) {
             if (isFiltered()) {
-                clearGrowZoneNumber()
+                clearGrowZoneNumber() // glow zone 을 -1 로 설정
             } else {
-                setGrowZoneNumber(9)
+                setGrowZoneNumber(2) // glow zone 을 9 로 설정
             }
         }
     }

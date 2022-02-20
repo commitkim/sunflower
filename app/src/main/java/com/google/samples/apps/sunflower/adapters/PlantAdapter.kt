@@ -31,6 +31,9 @@ import com.google.samples.apps.sunflower.databinding.ListItemPlantBinding
 /**
  * Adapter for the [RecyclerView] in [PlantListFragment].
  */
+/**
+ *  [GardenPlantingAdapter] 과 유사
+ */
 class PlantAdapter : ListAdapter<Plant, RecyclerView.ViewHolder>(PlantDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

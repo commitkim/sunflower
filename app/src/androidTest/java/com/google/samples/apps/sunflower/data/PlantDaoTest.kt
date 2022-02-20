@@ -47,6 +47,7 @@ class PlantDaoTest {
         plantDao = database.plantDao()
 
         // Insert plants in non-alphabetical order to test that results are sorted by name
+        // 테스트에 필요한 데이터들을 insert
         plantDao.insertAll(listOf(plantB, plantC, plantA))
     }
 
@@ -54,6 +55,7 @@ class PlantDaoTest {
         database.close()
     }
 
+    // 전체 리스트를 가져와서 기존에 추가했던 3개가 잘 들어가 있는지, 이름 순으로 잘 가져오는지 테스트
     @Test fun testGetPlants() = runBlocking {
         val plantList = plantDao.getPlants().first()
         assertThat(plantList.size, equalTo(3))
@@ -64,6 +66,7 @@ class PlantDaoTest {
         assertThat(plantList[2], equalTo(plantC))
     }
 
+    // growZone 으로 리스트를 잘 가져오는지 테스트
     @Test fun testGetPlantsWithGrowZoneNumber() = runBlocking {
         val plantList = plantDao.getPlantsWithGrowZoneNumber(1).first()
         assertThat(plantList.size, equalTo(2))
@@ -75,6 +78,7 @@ class PlantDaoTest {
         assertThat(plantList[1], equalTo(plantB))
     }
 
+    // plantId 로 정확한 plant를 가져오는지 테스트
     @Test fun testGetPlant() = runBlocking {
         assertThat(plantDao.getPlant(plantA.plantId).first(), equalTo(plantA))
     }

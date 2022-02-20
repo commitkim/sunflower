@@ -34,9 +34,11 @@ import javax.inject.Inject
 /**
  * The ViewModel for [PlantListFragment].
  */
+// hilt 에서 view model 관리
 @HiltViewModel
 class PlantListViewModel @Inject internal constructor(
     plantRepository: PlantRepository,
+    // 화면 회전 등의 활동에서 데이터를 저장하기 위한 파라미터
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -44,10 +46,13 @@ class PlantListViewModel @Inject internal constructor(
         savedStateHandle.get(GROW_ZONE_SAVED_STATE_KEY) ?: NO_GROW_ZONE
     )
 
+    // growZone 의 값에 따라 (필터 값에 따라) repository 에서 값을 가져옴
     val plants: LiveData<List<Plant>> = growZone.flatMapLatest { zone ->
         if (zone == NO_GROW_ZONE) {
+            // 전체 plant 를 가져옴
             plantRepository.getPlants()
         } else {
+            // growZone 에 부합하는 plant 를 가져옴
             plantRepository.getPlantsWithGrowZoneNumber(zone)
         }
     }.asLiveData()
@@ -82,6 +87,7 @@ class PlantListViewModel @Inject internal constructor(
          *    }.launchIn(viewModelScope)
          */
         viewModelScope.launch {
+            // growZone 이 변경될때 마다 savedStateHandle 에 GROW_ZONE_SAVED_STATE_KEY key 로 값 저장
             growZone.collect { newGrowZone ->
                 savedStateHandle.set(GROW_ZONE_SAVED_STATE_KEY, newGrowZone)
             }
@@ -96,6 +102,7 @@ class PlantListViewModel @Inject internal constructor(
         growZone.value = NO_GROW_ZONE
     }
 
+    // 필터가 있는지 확인
     fun isFiltered() = growZone.value != NO_GROW_ZONE
 
     companion object {

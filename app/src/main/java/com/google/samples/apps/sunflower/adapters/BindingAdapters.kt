@@ -19,6 +19,7 @@ package com.google.samples.apps.sunflower.adapters
 import android.view.View
 import androidx.databinding.BindingAdapter
 
+// view binding 의 binding adapter
 @BindingAdapter("isGone")
 fun bindIsGone(view: View, isGone: Boolean) {
     view.visibility = if (isGone) {

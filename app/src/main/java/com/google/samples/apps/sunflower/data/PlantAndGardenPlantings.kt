@@ -24,9 +24,11 @@ import androidx.room.Relation
  * used by Room to fetch the related entities.
  */
 data class PlantAndGardenPlantings(
+    // Room 에서 object 를 표현하기 위한 어노테이션
     @Embedded
     val plant: Plant,
 
+    // Room 에서
     @Relation(parentColumn = "id", entityColumn = "plant_id")
     val gardenPlantings: List<GardenPlanting> = emptyList()
 )

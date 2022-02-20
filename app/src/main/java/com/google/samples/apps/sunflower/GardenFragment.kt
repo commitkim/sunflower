@@ -33,8 +33,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GardenFragment : Fragment() {
 
+    // view binding 사용
     private lateinit var binding: FragmentGardenBinding
 
+    // viewModel 생성
     private val viewModel: GardenPlantingListViewModel by viewModels()
 
     override fun onCreateView(
@@ -42,11 +44,13 @@ class GardenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // view binding
         binding = FragmentGardenBinding.inflate(inflater, container, false)
         val adapter = GardenPlantingAdapter()
         binding.gardenList.adapter = adapter
 
         binding.addPlant.setOnClickListener {
+            // addPlant 버튼에 PlantListPage 로 가는 navigator 등록
             navigateToPlantListPage()
         }
 
@@ -54,9 +58,12 @@ class GardenFragment : Fragment() {
         return binding.root
     }
 
+    // viewModel의 plantAndGardenPlantings에 observe 등록해서 hasPlantings 를 업데이트하는 함수
     private fun subscribeUi(adapter: GardenPlantingAdapter, binding: FragmentGardenBinding) {
         viewModel.plantAndGardenPlantings.observe(viewLifecycleOwner) { result ->
             binding.hasPlantings = !result.isNullOrEmpty()
+
+            // adapter의 diffUtil의 활용한 업데이트
             adapter.submitList(result)
         }
     }

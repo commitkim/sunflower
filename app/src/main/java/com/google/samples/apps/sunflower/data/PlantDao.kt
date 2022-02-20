@@ -27,15 +27,19 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface PlantDao {
+    // plant 를 name 순으로 가져옴
     @Query("SELECT * FROM plants ORDER BY name")
     fun getPlants(): Flow<List<Plant>>
 
+    // growZoneNumber 를 사용하여 plant를 name 순으로 가져옴
     @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
     fun getPlantsWithGrowZoneNumber(growZoneNumber: Int): Flow<List<Plant>>
 
+    // plantId 를 사용하여 하나의 plant를 특정하여 가져옴
     @Query("SELECT * FROM plants WHERE id = :plantId")
     fun getPlant(plantId: String): Flow<Plant>
 
+    // 전달 받은 plant 들을 insert, 충돌이 발생했을때 replace 정책으로 해결
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(plants: List<Plant>)
 }

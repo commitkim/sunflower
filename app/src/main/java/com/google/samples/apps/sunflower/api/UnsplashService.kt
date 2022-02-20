@@ -29,6 +29,7 @@ import retrofit2.http.Query
 /**
  * Used to connect to the Unsplash API to fetch photos
  */
+// unsplash api 를 사용해서 검색하는 service
 interface UnsplashService {
 
     @GET("search/photos")
@@ -36,6 +37,7 @@ interface UnsplashService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
+        // build.properties 에서 가져온 access key 를 사용
         @Query("client_id") clientId: String = BuildConfig.UNSPLASH_ACCESS_KEY
     ): UnsplashSearchResponse
 

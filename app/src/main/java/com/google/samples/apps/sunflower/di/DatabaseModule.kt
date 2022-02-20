@@ -33,16 +33,19 @@ class DatabaseModule {
 
     @Singleton
     @Provides
+    // Application Context 를 제공받을수 있게 annotation 달아줌
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return AppDatabase.getInstance(context)
     }
 
     @Provides
+    // Dao annotation 을 가진 PlantDao 생성
     fun providePlantDao(appDatabase: AppDatabase): PlantDao {
         return appDatabase.plantDao()
     }
 
     @Provides
+    // Dao annotation 을 가진 GardenPlantingDao 생성
     fun provideGardenPlantingDao(appDatabase: AppDatabase): GardenPlantingDao {
         return appDatabase.gardenPlantingDao()
     }

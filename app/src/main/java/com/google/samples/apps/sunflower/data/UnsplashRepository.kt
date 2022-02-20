@@ -26,6 +26,7 @@ import javax.inject.Inject
 class UnsplashRepository @Inject constructor(private val service: UnsplashService) {
 
     fun getSearchResultStream(query: String): Flow<PagingData<UnsplashPhoto>> {
+        //
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
             pagingSourceFactory = { UnsplashPagingSource(service, query) }
@@ -33,6 +34,7 @@ class UnsplashRepository @Inject constructor(private val service: UnsplashServic
     }
 
     companion object {
+        // 한번에 25장씩 가져오겠다는 뜻
         private const val NETWORK_PAGE_SIZE = 25
     }
 }
